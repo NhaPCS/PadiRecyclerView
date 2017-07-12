@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.paditech.padirecyclerview.RefreshLoadmoreRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:item_animate_duration="220"
+    app:load_more_color="@color/colorPrimary"
+    app:refresh_color="@color/colorPrimary"
+    app:dragging_enable="false"
+    app:swipe_enable="true"
+    tools:context="com.paditech.demomaterial.MainActivity">
+
+</com.paditech.padirecyclerview.RefreshLoadmoreRecyclerView>

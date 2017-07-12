@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Padi_RecycelerView">
+        <attr name="load_more_color" format="color" />
+        <attr name="refresh_color" format="color" />
+        <attr name="item_animate_duration" format="integer" />
+        <attr name="dragging_enable" format="boolean" />
+        <attr name="swipe_enable" format="boolean" />
+    </declare-styleable>
+</resources>
