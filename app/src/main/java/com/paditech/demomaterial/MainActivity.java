@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -53,12 +56,18 @@ public class MainActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mAdapter.setSize(20);
-        /*mSwipeRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+    }
 
-            }
-        }, 1000);*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

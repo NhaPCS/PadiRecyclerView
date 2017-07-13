@@ -1,0 +1,96 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+def isReleaseBuild() {
+    return VERSION_NAME.contains("SNAPSHOT") == false
+}
+
+def getRepositoryUsername() {
+    return hasProperty('NEXUS_USERNAME') ? 'nhapcs' : 'nhapcs'
+}
+
+def getRepositoryPassword() {
+    return hasProperty('NEXUS_PASSWORD') ? 'dongbang' : 'dongbang'
+}
+
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+            : "https://oss.sonatype.org/content/repositories/snapshots/"
+}
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                pom.groupId = 'com.paditech.padirecyclerview'
+                pom.artifactId = 'padirecyclerview'
+                pom.version = '1.5'
+
+                repository(url: getReleaseRepositoryUrl()) {
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                }
+                snapshotRepository(url: getSnapshotRepositoryUrl()) {
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
+                }
+
+                pom.project {
+                    name 'PadiRecyclerView'
+                    packaging 'aar'
+                    description 'support pull to refresh, load more, drag items, swipe items...'
+                    url 'https://github.com/NhaPCS/PadiRecyclerView'
+
+                    scm {
+                        url 'https://github.com/NhaPCS/PadiRecyclerView.git'
+                        connection 'scm:git@github.com:NhaPCS/PadiRecyclerView.git'
+                        developerConnection 'scm:git@github.com:NhaPCS/PadiRecyclerView.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'nhapcs'
+                            name 'Pham Nha'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        required { isReleaseBuild() && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+    //task androidJavadocs(type: Javadoc) {
+    //source = android.sourceSets.main.allJava
+    //}
+
+    //task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    //classifier = 'javadoc'
+    //from androidJavadocs.destinationDir
+    //}
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+
+    artifacts {
+        archives androidSourcesJar
+    }
+}

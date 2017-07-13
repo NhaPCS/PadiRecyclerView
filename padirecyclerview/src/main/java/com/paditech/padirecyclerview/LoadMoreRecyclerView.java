@@ -75,6 +75,21 @@ public class LoadMoreRecyclerView extends RecyclerView {
         typedArray.recycle();
     }
 
+    public void setmDraggingEnable(boolean mDraggingEnable) {
+        this.mDraggingEnable = mDraggingEnable;
+    }
+
+    public void setmSwipeEnable(boolean mSwipeEnable) {
+        this.mSwipeEnable = mSwipeEnable;
+        if (mWrapAdapter != null) mWrapAdapter.notifyDataSetChanged();
+    }
+
+    public void startDrag(ViewHolder viewHolder) {
+        if (mItemTouchHelper != null && viewHolder != null) {
+            mItemTouchHelper.startDrag(viewHolder);
+        }
+    }
+
     public void setmLoadMoreColor(int mLoadMoreColor) {
         this.mLoadMoreColor = mLoadMoreColor;
     }
@@ -225,8 +240,8 @@ public class LoadMoreRecyclerView extends RecyclerView {
                 view.animate().cancel();
                 view.setTranslationY(100);
                 view.setAlpha(0);
-                view.setScaleX(0.95f);
-                view.setScaleY(0.95f);
+                //view.setScaleX(0.98f);
+                //view.setScaleY(0.98f);
                 view.animate().alpha(1.0f).scaleX(1f).scaleY(1f).
                         setInterpolator(new AccelerateDecelerateInterpolator()).translationY(0).
                         setDuration(mItemAnimateDuration).setStartDelay(pos * 100);
@@ -248,7 +263,6 @@ public class LoadMoreRecyclerView extends RecyclerView {
 
     private class WrapAdapter extends Adapter<ViewHolder> implements TouchItemHelperAdapter {
 
-        private float x1, x2;
         private Adapter<ViewHolder> adapter;
 
         public WrapAdapter(Adapter<ViewHolder> adapter) {
@@ -304,9 +318,6 @@ public class LoadMoreRecyclerView extends RecyclerView {
                         public boolean onTouch(View view, MotionEvent motionEvent) {
                             switch (motionEvent.getAction()) {
                                 case MotionEvent.ACTION_DOWN:
-                                    x1 = motionEvent.getX();
-                                    if (mDraggingEnable && mItemTouchHelper != null)
-                                        mItemTouchHelper.startDrag(holder);
                                     if (mSwipeEnable && mItemTouchHelper != null) {
                                         mItemTouchHelper.startSwipe(holder);
                                     }

@@ -86,8 +86,5 @@ trestle.keystore
 hs_err_pid*
 
 # Misc
-app/libs/
-app/src/main/res/drawable/
 padirecyclerview/gradle.properties
-padirecyclerview/libs/
-padirecyclerview/maven-push.gradle
+

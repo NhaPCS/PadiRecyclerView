@@ -5,11 +5,11 @@
     android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:item_animate_duration="220"
+    app:dragging_enable="false"
+    app:item_animate_duration="250"
     app:load_more_color="@color/colorPrimary"
     app:refresh_color="@color/colorPrimary"
-    app:dragging_enable="false"
-    app:swipe_enable="true"
+    app:swipe_enable="false"
     tools:context="com.paditech.demomaterial.MainActivity">
 
 </com.paditech.padirecyclerview.RefreshLoadmoreRecyclerView>
